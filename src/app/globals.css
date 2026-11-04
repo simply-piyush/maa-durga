@@ -1,26 +1,146 @@
 @import "tailwindcss";
 
+@theme {
+  /* Brand Palette from Design Spec: Lemon Chiffon, Royal Gold, Regal Navy */
+  --color-lemon-chiffon: #faf0ca;
+  --color-lemon-chiffon-light: #fefdf8;
+  --color-lemon-chiffon-dark: #ebdcb2;
+
+  --color-royal-gold: #f4d35e;
+  --color-royal-gold-hover: #e5c345;
+  --color-royal-gold-light: #fae48e;
+  --color-royal-gold-dark: #cfae2e;
+
+  --color-regal-navy: #0d3b66;
+  --color-regal-navy-dark: #07223d;
+  --color-regal-navy-deep: #041424;
+  --color-regal-navy-light: #16538c;
+  --color-regal-navy-muted: #2d689e;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Exact Design Swatches */
+  --lemon-chiffon: #faf0ca;
+  --lemon-chiffon-light: #fefdf8;
+  --royal-gold: #f4d35e;
+  --royal-gold-hover: #e5c345;
+  --regal-navy: #0d3b66;
+  --regal-navy-dark: #07223d;
+  --regal-navy-deep: #041424;
+  --regal-navy-light: #16538c;
+
+  /* Semantic UI Tokens */
+  --background: #fefdf8;
+  --foreground: #07223d;
+  --brand-primary: #f4d35e;
+  --brand-primary-hover: #e5c345;
+  --brand-secondary: #0d3b66;
+  --brand-secondary-dark: #07223d;
+  --brand-accent: #f4d35e;
+  --brand-surface: #faf0ca;
+  --card-bg: #ffffff;
+  --border-subtle: #ebdcb2;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
+  overflow-x: clip;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+/* Accessibility Focus Ring using Royal Gold */
+:where(a:any-link, button, input, select, textarea, summary):focus-visible {
+  outline: 3px solid var(--royal-gold);
+  outline-offset: 3px;
+}
+
+/* Visually Hidden Utility for Screen Readers & Skip Links */
+.visually-hidden:where(:not(:focus-within, :active)) {
+  position: absolute !important;
+  clip-path: inset(50%) !important;
+  overflow: hidden !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  white-space: nowrap !important;
+}
+
+/* Skip Link styling when focused */
+.skip-link:focus-visible {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 100;
+  background-color: #07223d;
+  color: #faf0ca;
+  border: 2px solid #f4d35e;
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 25px -5px rgba(7, 34, 61, 0.4);
+  text-decoration: none;
+}
+
+/* Custom Scrollbar styled with Regal Navy and Lemon Chiffon */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fbf5dc;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0d3b66;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #07223d;
+}
+
+/* Exclusive Accordion details animation */
+details[open] > summary {
+  color: var(--brand-secondary);
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Seamless Infinite Marquee */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation-play-state: paused;
+  }
 }
